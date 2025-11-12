@@ -5,6 +5,8 @@ const userRouters=require("./Routes/userRouter")
 const dotenv=require("dotenv")
 dotenv.config()
 
+const port=process.env.PORT || 5000
+
 app.use(express.json())
 dbConnection()
 
@@ -18,6 +20,6 @@ app.get("/",(req,res)=>{
 
 app.use("/api",userRouters)
 
-app.listen(5000,(req,res)=>{
-    console.log("server is running at 5000 port")
-})
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
+});
