@@ -8,6 +8,30 @@ const postUser=async(req,res)=>{
     })
 }
 
+const signinController=async(req,res)=>{
+
+    const user=await SignupSchema.findOne({email:req.body.email})
+    if(!user){
+        return res.status(400).json({
+            status:400,
+            message:"Invalid email or password",
+        })
+    }
+    
+    if(user.password!=req.body.password){
+        return res.status(400).json({
+            status:400,
+            message:"Invalid email or password",
+        })
+    }
+
+    return res.status(200).json({
+        status:200,
+        message:"Login successful",
+        user:user
+    })
+}
+
 const getUsers=async(req,res)=>{
     const data=await SignupSchema.find()
     const totatlNumber=await SignupSchema.countDocuments()
@@ -17,4 +41,4 @@ const getUsers=async(req,res)=>{
     })
 }
 
-module.exports={postUser,getUsers}
+module.exports={postUser,getUsers,signinController}
