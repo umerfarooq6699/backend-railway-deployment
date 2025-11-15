@@ -1,17 +1,20 @@
 const SignupSchema = require("../Models/SignupSchema")
 
 const postUser=async(req,res)=>{
-    await SignupSchema.create({
-        name:"umer",
-        age:25
+    await SignupSchema.create(req.body)
+    return res.status(201).json({
+        status:201,
+        message:"user created successfully"
     })
-    res.send({message:"user created successfully"})
 }
 
 const getUsers=async(req,res)=>{
     const data=await SignupSchema.find()
-    console.log(data)
-    res.send(data)
+    const totatlNumber=await SignupSchema.countDocuments()
+    return res.status(200).json({
+        count:totatlNumber,
+        results:data
+    })
 }
 
 module.exports={postUser,getUsers}
